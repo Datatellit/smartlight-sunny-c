@@ -141,7 +141,6 @@ uint8_t m_cntRFSendFailed = 0;
 int32_t offdelaytick = -1;
 bool isChangeGradually = FALSE;
 Hue_t gDelayNextState;
-uint16_t stateSetTimeout = 0;
 uint8_t gStateSetDelay = 0;
 
 // Delayed operation in function idleProcess()
@@ -1295,7 +1294,6 @@ bool SetDeviceCCT(uint16_t _cct, uint8_t _ring) {
   }
   
 #else
-  
   if( _cct != DEVST_WarmCold ) {
 #ifdef GRADUAL_CCT    
     // Smoothly change CCT - set parameters
@@ -1734,10 +1732,6 @@ void tmrProcess() {
   if(gMainloopTimeTick < MAINLOOP_TIMEOUT)
   {
     gMainloopTimeTick++;
-  }
-  if(stateSetTimeout < STATE_SET_TIMEOUT)
-  {
-    stateSetTimeout++;
   }
   // Save config into backup area
    SaveBackupConfig();

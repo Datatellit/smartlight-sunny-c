@@ -72,7 +72,6 @@
 #define MAX_RF_FAILED_TIME              8      // Reset RF module when reach max failed times of sending
 #define MAX_RF_RESET_TIME               3      // Reset Node when reach max times of RF module consecutive reset
 
-#define STATE_SET_TIMEOUT               100      //1s for statue set timeout
 
 // Whether allow individual color control of ring
 /// Uncomment this line only if h       ardware supports
@@ -194,7 +193,6 @@ extern int32_t offdelaytick;
 extern uint8_t gBreatheCount;
 extern bool gPairing;
 extern Hue_t gDelayNextState;
-extern uint16_t stateSetTimeout;
 
 
 bool isIdentityEqual(const UC *pId1, const UC *pId2, UC nLen);
@@ -214,7 +212,6 @@ void ChangeDeviceBR(uint32_t _br, uint8_t _ring);
 void ResetNodeToRegister();
 bool isIdentityEmpty(const UC *pId, UC nLen);
 bool isIdentityEqual(const UC *pId1, const UC *pId2, UC nLen);
-bool isTimerCompleted(uint8_t _tmr);
 void ChangeBRByTime(uint8_t from,uint8_t to,uint32_t timetick);
 void stopAllStateTimer();
 

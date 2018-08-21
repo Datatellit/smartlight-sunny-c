@@ -173,15 +173,9 @@ uint8_t ParseProtocol(){
           memcpy(gConfig.remoteUniqueid,rcvMsg.header.uniqueid,UNIQUE_ID_LEN);
           gPairing = TRUE;
           gBreatheCount = 5;
-          SetDeviceStatus(1, 75, 4700, 0);
-          stateSetTimeout = 0;
-          while(!isTimerCompleted(DELAY_TIM_BR) || !isTimerCompleted(DELAY_TIM_CCT))
-          {
-            if(stateSetTimeout >= STATE_SET_TIMEOUT)
-            {
-              break;
-            }
-          }
+          stopAllStateTimer();
+          SetDeviceStatus(TRUE, 75, 4700, 0);
+          // timer interrupt priority lower than rf24 interrupt,so,timer will work after ParseProtocol Interrupt Handler
           SetDeviceFilter(FILTER_SP_EF_FAST_BREATH);
         }
         break;
@@ -293,17 +287,19 @@ uint8_t ParseProtocol(){
     
   case C_SET:
     if( (IS_MINE_SUBID(_sensor) || _specificNode) && !_isAck ) {
+      // stopAllStateTimer for switch off light gradually(set any state can stop switch off light gradually)
       stopAllStateTimer();
+      if(gPairing)
+      {
+        gPairing = FALSE;
+        if(gConfig.filter) gConfig.filter = 0;
+      }
       if( _type == V_STATUS ) {
         uint8_t _lenPayl = miGetLength();
         if( _lenPayl == 1)
         { 
           // set main lamp(ID:1) power(V_STATUS:2) on/off        
           bool _OnOff = (rcvMsg.payload.bValue == DEVICE_SW_TOGGLE ? DEVST_OnOff == DEVICE_SW_OFF : rcvMsg.payload.bValue == DEVICE_SW_ON);
-          /*if(DEVST_Bright > 0)
-          {
-            _OnOff = (rcvMsg.payload.bValue == DEVICE_SW_TOGGLE ? 0 : 1);
-          }*/
           SetDeviceOnOff(_OnOff, RING_ID_ALL);
           if( _needAck ) {
             bDelaySend = (rcvMsg.header.destination == BROADCAST_ADDRESS);
@@ -340,15 +336,7 @@ uint8_t ParseProtocol(){
             {
               if(br > 0)
               {
-                SetDeviceBrightness( br,0);
-                stateSetTimeout = 0;
-                while(!isTimerCompleted(DELAY_TIM_BR) || !isTimerCompleted(DELAY_TIM_CCT))
-                {
-                  if(stateSetTimeout >= STATE_SET_TIMEOUT)
-                  {
-                    break;
-                  }
-                }             
+                SetDeviceBrightness( br,0);         
               }
               offdelaytick = offdelaytick*2;
               ChangeBRByTime(DEVST_Bright,0,offdelaytick); //5ms timer
