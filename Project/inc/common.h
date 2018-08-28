@@ -21,7 +21,7 @@
 #define FILTER_SP_EF_FLORID         3       // Randomly altering color
 #define FILTER_SP_EF_FAST_FLORID    4       // Fast randomly altering color
 
-#define BR_MIN_VALUE            1
+#define BR_MIN_VALUE            10
 #define CT_MIN_VALUE            2700
 #define CT_MAX_VALUE            6500
 #define CT_SCOPE                38    
