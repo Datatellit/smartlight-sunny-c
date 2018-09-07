@@ -96,6 +96,7 @@ uint32_t gRunningTimeTick=0;
 uint16_t gMainloopTimeTick=0;
 uint8_t gBreatheCount=0;
 bool gPairing=FALSE;
+uint16_t gToggleTick=TOGGLE_TIMEOUT;
 
 // Uncomment this line to enable CCT brightness quadratic function
 //#define CCT_BR_QUADRATIC_FUNC
@@ -1692,9 +1693,11 @@ bool isTimerCompleted(uint8_t _tmr) {
 
 void stopAllStateTimer()
 {
-  BF_SET(delay_func, 0, DELAY_TIM_ONOFF, 4);
-  if(gStateSetDelay == 1) gStateSetDelay = 0;
-
+  if(gStateSetDelay == 1)
+  {
+    gStateSetDelay = 0;
+    BF_SET(delay_func, 0, DELAY_TIM_ONOFF, 4);
+  }
 }
 
 // Execute timer operations
@@ -1732,6 +1735,10 @@ void tmrProcess() {
   if(gMainloopTimeTick < MAINLOOP_TIMEOUT)
   {
     gMainloopTimeTick++;
+  }
+  if(gToggleTick < TOGGLE_TIMEOUT)
+  {
+    gToggleTick++;
   }
   // Save config into backup area
    SaveBackupConfig();

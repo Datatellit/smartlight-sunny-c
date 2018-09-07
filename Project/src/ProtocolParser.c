@@ -298,7 +298,18 @@ uint8_t ParseProtocol(){
         uint8_t _lenPayl = miGetLength();
         if( _lenPayl == 1)
         { 
-          // set main lamp(ID:1) power(V_STATUS:2) on/off        
+          // set main lamp(ID:1) power(V_STATUS:2) on/off   
+          if(rcvMsg.payload.bValue == DEVICE_SW_TOGGLE) 
+          {
+            if(gToggleTick < TOGGLE_TIMEOUT)
+            {// ignore repeted msg in TOGGLE_TIMEOUT time
+             return 1;
+            }
+            else
+            {
+              gToggleTick = 0;
+            }
+          }
           bool _OnOff = (rcvMsg.payload.bValue == DEVICE_SW_TOGGLE ? DEVST_OnOff == DEVICE_SW_OFF : rcvMsg.payload.bValue == DEVICE_SW_ON);
           SetDeviceOnOff(_OnOff, RING_ID_ALL);
           if( _needAck ) {
