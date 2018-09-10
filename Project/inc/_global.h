@@ -5,8 +5,7 @@
 #include "stdio.h"
 #include "string.h"
 #include "stm8s_conf.h"
-#include "publicDefine.h"
-#include "common.h"
+#include "LightPublicDefine.h"
 
 /* Exported types ------------------------------------------------------------*/
 // Simple Direct Test
@@ -23,49 +22,6 @@
 //#define EN_SENSOR_MQ135
 //#define EN_SENSOR_MQ2
 //#define EN_SENSOR_MQ7
-
-// Serial Command
-#define UART_CMD_HELLO                  0
-#define UART_CMD_CCT                    1
-#define UART_CMD_RGBW                   2
-#define UART_CMD_HELLO_ACK              16
-
-#define LIGHT_PWM_THRESHOLD     5
-
-#define UNIQUE_ID_LEN           8
-
-// Delayed operation timers
-#define DELAY_TIMERS            8
-#define DELAY_TIM_ONOFF         0
-#define DELAY_TIM_BR            1
-#define DELAY_TIM_CCT           2
-#define DELAY_TIM_RGB           3
-#define DELAY_TIM_MSG           7
-
-// Comment off the line to disable gradual brightness on or off
-#define GRADUAL_ONOFF
-#define GRADUAL_CCT
-//#define GRADUAL_RGB
-#define DEFAULT_BRIGHTNESS      65
-#define BRIGHTNESS_STEP         1
-#define MAX_STEP_TIMES          62
-#define MAX_FASTSTEP_TIMES      20
-#define CCT_STEP                50
-#define RGB_STEP                3
-
-// WATT regulation method
-/// Option 0: no restriction
-/// Option 1: percentage
-/// Option 2: percentage + linear
-/// Option 3: percentage + quadratic
-/// Option 4: percentage + cubic function
-/// Option 10: percentage + table
-#define WATT_RM_NO_RESTRICTION          0
-#define WATT_RM_PERCENTAGE              1
-#define WATT_RM_LINEAR_PERCENTAGE       2
-#define WATT_RM_QUADRATIC_PERCENTAGE    3
-#define WATT_RM_CUBIC_PERCENTAGE        4
-#define WATT_RM_TABLE_PERCENTAGE        10
 
 // Keep alive message interval, around 6 seconds
 #define RTE_TM_KEEP_ALIVE               500    // about 5s (500 * 10ms)
@@ -125,22 +81,6 @@ typedef struct
   UC L2                       :8;           // Length of thread 2
   UC L3                       :8;           // Length of thread 3
 } Hue_t;
-
-
-// I_GET_NONCE sub-type
-enum {
-    SCANNER_PROBE = 0,
-    SCANNER_SETUP_RF,           // by NodeID & SubID
-    SCANNER_SETUPDEV_RF,        // by UniqueID
-    
-    SCANNER_GETCONFIG = 8,      // by NodeID & SubID
-    SCANNER_SETCONFIG,
-    SCANNER_GETDEV_CONFIG,      // by UniqueID
-    SCANNER_SETDEV_CONFIG,
-    
-    SCANNER_TEST_NODE = 16,     // by NodeID & SubID
-    SCANNER_TEST_DEVICE,        // by UniqueID
-};
 
 // Xlight Application Identification
 #define XLA_VERSION               0x20

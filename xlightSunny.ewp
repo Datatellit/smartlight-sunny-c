@@ -191,6 +191,8 @@
           <name>CCDefines</name>
           <state>STM8S105</state>
           <state>XSUNNY</state>
+          <state>DEBUG_NO_WWDG</state>
+          <state>RF24</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1690,10 +1692,10 @@
         <name>$PROJ_DIR$\..\xlightCommon-stm8s\Xlight_lib\FlashDataStorage.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\xlightCommon-stm8s\Xlight_lib\MyMessage.h</name>
+        <name>$PROJ_DIR$\..\xlightCommon-stm8s\Xlight_lib\LightPublicDefine.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\xlightCommon-stm8s\Xlight_lib\publicDefine.h</name>
+        <name>$PROJ_DIR$\..\xlightCommon-stm8s\Xlight_lib\MyMessage.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\xlightCommon-stm8s\Xlight_lib\rf24l01.c</name>
@@ -1722,6 +1724,9 @@
       <file>
         <name>$PROJ_DIR$\..\xlightCommon-stm8s\Xlight_lib\wwdg.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$\..\xlightCommon-stm8s\Xlight_lib\xliNodeConfig.h</name>
+      </file>
     </group>
     <group>
       <name>inc</name>
@@ -1735,9 +1740,6 @@
         <name>$PROJ_DIR$\Project\inc\color_factory.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\Project\inc\common.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$\Project\inc\LightPwmDrv.h</name>
       </file>
       <file>
@@ -1748,9 +1750,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$\Project\inc\stm8s_it.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\Project\inc\xliNodeConfig.h</name>
       </file>
     </group>
     <group>
